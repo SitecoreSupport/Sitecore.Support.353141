@@ -21,17 +21,24 @@ namespace Sitecore.Support.ContentSearch
         {
             Assert.ArgumentNotNull(indexableUniqueId, "indexableUniqueId");
 
+            if (!ShouldStartIndexing(indexingOptions))
+            {
+                return;
+            }
+
+            if (this.IsExcludedFromIndex(indexableUniqueId, operationContext, true))
+            {
+                return;
+            }
+
             var contextEx = context as ITrackingIndexingContext;
             var skipIndexable = contextEx != null && !contextEx.Processed.TryAdd(indexableUniqueId, null);
 
-            if (skipIndexable || !ShouldStartIndexing(indexingOptions))
+            if (skipIndexable)
                 return;
 
             var options = this.DocumentOptions;
             Assert.IsNotNull(options, "DocumentOptions");
-
-            if (this.IsExcludedFromIndex(indexableUniqueId, operationContext, true))
-                return;
 
             if (operationContext != null)
             {
