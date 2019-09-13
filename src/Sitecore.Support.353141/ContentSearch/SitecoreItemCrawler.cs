@@ -37,7 +37,7 @@ namespace Sitecore.Support.ContentSearch
             {
                 if (operationContext.NeedUpdateChildren)
                 {
-                    var item = Data.Database.GetItem(indexableUniqueId as SitecoreItemUniqueId);
+                    var item = GetIndexable(indexableUniqueId as SitecoreItemUniqueId);
 
                     if (item != null)
                     {
@@ -59,7 +59,7 @@ namespace Sitecore.Support.ContentSearch
 
                 if (operationContext.NeedUpdatePreviousVersion)
                 {
-                    var item = Data.Database.GetItem(indexableUniqueId as SitecoreItemUniqueId);
+                    var item = GetIndexable(indexableUniqueId as SitecoreItemUniqueId);
                     if (item != null)
                     {
                         this.UpdatePreviousVersion(item, context);
