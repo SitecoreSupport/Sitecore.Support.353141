@@ -65,6 +65,16 @@ namespace Sitecore.Support.ContentSearch
                         this.UpdatePreviousVersion(item, context);
                     }
                 }
+
+                if (operationContext.NeedUpdateAllVersions)
+                {
+                    var item = GetIndexable(indexableUniqueId as SitecoreItemUniqueId);
+                    if (item != null)
+                    {
+                        this.DoUpdate(context, item, operationContext);
+                        return;
+                    }
+                }
             }
 
             var indexable = this.GetIndexableAndCheckDeletes(indexableUniqueId);
